@@ -1,7 +1,9 @@
 from sipy import Context
+
 from importlib.machinery import SourceFileLoader
-import os
 from pathlib import Path
+import os
+
 
 def main():
   """
