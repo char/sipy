@@ -19,4 +19,8 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.8",
+    install_requires=[
+      "misaka>=2.1.1",
+      "jinja2>=2.11.1"
+    ]
 )
