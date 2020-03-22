@@ -11,8 +11,20 @@
   </head>
 
   <body>
+    <nav>
+      <ul>
+        {% for title, href in nav.items() %}
+          <li><a href="{{ '/' + href }}">{{ title }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+
     <main>
       {{ content }}
     </main>
+
+    <footer>
+      <p><code>sipy</code> is built by <a href="https://anthony.som.codes/">Anthony Som</a>.</p>
+    </footer>
   </body>
 </html>

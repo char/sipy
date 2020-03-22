@@ -45,6 +45,10 @@ def build(ctx: Context):
   css_styles = open("build_src/styles.css").read()
   css_styles = minify_css(css_styles)
 
+  nav = {
+    "Home": "/",
+  }
+
   for name in ctx.names:
     if name.endswith(".md"):
       content = ctx.read_text(name)
@@ -54,7 +58,15 @@ def build(ctx: Context):
 
       rendered_markdown = md.render(content, highlighting=highlighting)
 
-      content = markdown_template.render(content=rendered_markdown, styles=css_styles, **metadata)
+      content = markdown_template.render(
+        content=rendered_markdown,
+        **metadata,
+        **{
+          "styles": css_styles,
+          "nav": nav
+        }
+      )
+
       ctx.write_text(name[:-len(".md")] + ".html", content)
     else:
       ctx.copy(name)
