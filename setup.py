@@ -23,5 +23,10 @@ setuptools.setup(
       "misaka>=2.1.1",
       "jinja2>=2.11.1",
       "PyYAML>=5.3.1"
-    ]
+    ],
+    entry_points={
+      "console_scripts": [
+        'sipy = sipy.__main__:main'
+      ]
+    }
 )
