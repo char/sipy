@@ -1,6 +1,19 @@
 from sipy import Context
 
 
+def pretty_link(name: str) -> str:
+  # {x}.html -> {x}/index.html
+  # index.html -> index.html
+  # So that we can link to things like /x/
+
+  assert(name.endswith(".html"))
+
+  if name == "index.html" or name.endswith("/index.html"):
+    return name
+  else:
+    return "{}/index.html".format(name[:-len(".html")])
+
+
 def build(ctx: Context):
   templating = ctx.ext("templating")
   md = ctx.ext("markdown")
@@ -14,6 +27,7 @@ def build(ctx: Context):
 
   nav = {
     "Home": "/",
+    "Extensions": "/extensions/"
   }
 
   for name in ctx.names:
@@ -34,6 +48,6 @@ def build(ctx: Context):
         }
       )
 
-      ctx.write_text(name[:-len(".md")] + ".html", minification.minify_html(content))
+      ctx.write_text(pretty_link(name[:-len(".md")] + ".html"), minification.minify_html(content))
     else:
       ctx.copy(name)

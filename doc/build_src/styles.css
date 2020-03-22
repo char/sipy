@@ -76,7 +76,7 @@ a:hover {
 }
 
 footer a {
-  color: rgb(0, 255, 242)
+  color: rgb(123, 218, 255)
 }
 
 /* Code */
@@ -84,7 +84,7 @@ footer a {
 pre > code, main {
   display: block;
   margin: 10px auto 40px;
-  max-width: 80ch;
+  max-width: 88ch;
   padding: 0 10px;
   margin-bottom: 0;
   margin-bottom: 40px;
@@ -93,11 +93,9 @@ pre > code, main {
 pre > code {
   background: #000;
   color: #eee;
-  font-size: 14px;
   font-weight: normal;
   padding: 20px;
   white-space: pre-wrap;
-  max-width: 100%;
 }
 
 pre, code {
@@ -106,6 +104,8 @@ pre, code {
 
 code {
   font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 14px;
+
   background: #eef;
   font-weight: 500;
   padding: .1em .4em;
@@ -128,4 +128,4 @@ footer code {
 .hl .c1 { color: hsl(248, 7%, 56%); } /* Comments */
 .hl .nb, .hl .nt { color: hsl(147, 68%, 72%); } /* Builtins */
 .hl .s1, .hl .s2 { color: hsl(167, 100%, 74%); } /* Strings */
-.hl .mi { color: hsl(202, 91%, 67%) } /* Integer literals */
+.hl .mi, .hl .si { color: hsl(202, 91%, 67%) } /* Integer literals */
