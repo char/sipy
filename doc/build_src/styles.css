@@ -93,8 +93,7 @@ pre > code, main {
 pre > code {
   background: #000;
   color: #eee;
-  font-size: 16px;
-  font-family: Consolas, monospace;
+  font-size: 14px;
   font-weight: normal;
   padding: 20px;
   white-space: pre-wrap;
@@ -106,6 +105,7 @@ pre, code {
 }
 
 code {
+  font-family: 'Consolas', 'Monaco', monospace;
   background: #eef;
   font-weight: 500;
   padding: .1em .4em;

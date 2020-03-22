@@ -73,7 +73,8 @@ def build(ctx):
       # Perhaps something like:
       # 
       #   base_name = strip_extension(name, ".md")
-      #   if base_name == "index" f"{base_name}.html" else f"{base_name}/index.html"
+      #   f"{base_name}.html" if base_name == "index" \
+      #   else f"{base_name}/index.html"
       # 
       ctx.write_text(name.replace(".md", ".html"), rendered_page)
     else:
