@@ -96,6 +96,7 @@ pre > code {
   font-weight: normal;
   padding: 20px;
   white-space: pre-wrap;
+  max-width: 100%;
 }
 
 pre, code {
