@@ -1,66 +1,111 @@
-<!DOCTYPE html><html> <head><meta charset=utf-8><title>sipy - A scriptable static site generator.</title><style>body{display:flex;flex-direction:column;font:16px / 1.6 sans-serif;margin:0;min-height:100vh;overflow:hidden scroll;word-wrap:break-word}main{flex:1;width:calc(100% - 20px)}h1,h2,h3{margin-top:0.5em}p{margin:16px auto}footer>p{max-width:52ch;text-align:center}nav li{display:inline-block;line-height:2.5}nav,footer{background:#000;padding:0.5em}ul{padding-left:2em}nav ul{margin:0;padding:0;text-align:center}nav li{margin:0 2ch}li>ul{margin:5px 0 15px}nav a,nav a:hover,footer{color:#eee}a{color:rgb(0, 112, 255);text-decoration:none}a:hover{border-bottom:1px solid}footer a{color:rgb(123, 218, 255)}pre>code,main{display:block;margin:10px auto 40px;max-width:88ch;padding:0 10px;margin-bottom:40px}pre>code{background:#000;color:#eee;font-weight:normal;padding:20px;white-space:pre-wrap}pre,code{border-radius:6px}code{font-family:'Consolas', 'Monaco', monospace;font-size:14px;background:#eef;font-weight:500;padding:.1em .4em}footer code{background:#111116}.hl{display:block;overflow-x:auto}.hl .k,.hl .gh{font-weight:bold;color:hsl(61, 86%, 68%)}.hl .c1{color:hsl(248, 7%, 56%)}.hl .nb,.hl .nt{color:hsl(147, 68%, 72%)}.hl .s1,.hl .s2{color:hsl(167, 100%, 74%)}.hl .mi,.hl .si{color:hsl(202, 91%, 67%)}</style></head> <body> <nav> <ul> <li><a href=/ >Home</a></li> <li><a href=/extensions/ >Extensions</a></li> </ul> </nav> <main> <h1>sipy: A scriptable static site generator.</h1> <p><code>sipy</code> is a static site generator, where configuration is done by writing Python.</p> <h2>Install</h2> <p><code>sipy</code> can be easily installed using <code>pip</code>:</p> <pre><code class=hl>$ pip3 install <span class=s2>&quot;git+https://github.com/half-cambodian-hacker-man/sipy.git&quot;</span>
-</code></pre> <h2>Getting Started</h2> <p>To create a site using <code>sipy</code>, all you need is a folder structure like so:</p> <pre><code class=hl>├── build.py
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>sipy - A scriptable static site generator.</title>
+    <style>body{display:flex;flex-direction:column;font:16px / 1.6 sans-serif;margin:0;min-height:100vh;overflow:hidden scroll;word-wrap:break-word}main{flex:1;width:calc(100% - 20px)}h1,h2,h3{margin-top:0.5em}p{margin:16px auto}footer>p{max-width:52ch;text-align:center}nav li{display:inline-block;line-height:2.5}nav,footer{background:#000;padding:0.5em}ul{padding-left:2em}nav ul{margin:0;padding:0;text-align:center}nav li{margin:0 2ch}li>ul{margin:5px 0 15px}nav a,nav a:hover,footer{color:#eee}a{color:rgb(0, 112, 255);text-decoration:none}a:hover{border-bottom:1px solid}footer a{color:rgb(123, 218, 255)}pre>code,main{display:block;margin:10px auto 40px;max-width:88ch;padding:0 10px;margin-bottom:40px}pre>code{background:#000;color:#eee;font-weight:normal;padding:20px;white-space:pre-wrap;max-width:100%}pre,code{border-radius:6px}code{font-family:'Consolas', 'Monaco', monospace;font-size:14px;background:#eef;font-weight:500;padding:.1em .4em}footer code{background:#111116}.hl{display:block;overflow-x:auto}.hl .k,.hl .gh{font-weight:bold;color:hsl(61, 86%, 68%)}.hl .c1{color:hsl(248, 7%, 56%)}.hl .nb,.hl .nt{color:hsl(147, 68%, 72%)}.hl .s1,.hl .s2{color:hsl(167, 100%, 74%)}.hl .mi,.hl .si{color:hsl(202, 91%, 67%)}</style>
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/extensions/">Extensions</a></li>
+        
+      </ul>
+    </nav>
+
+    <main>
+      <h1>sipy: A scriptable static site generator.</h1>
+
+<p><code>sipy</code> is a static site generator, where configuration is done by writing Python.</p>
+
+<h2>Install</h2>
+
+<p><code>sipy</code> can be easily installed using <code>pip</code>:</p>
+<pre><code class="hl">$ pip3 install <span class="s2">&quot;git+https://github.com/half-cambodian-hacker-man/sipy.git&quot;</span>
+</code></pre>
+<h2>Getting Started</h2>
+
+<p>To create a site using <code>sipy</code>, all you need is a folder structure like so:</p>
+<pre><code class="hl">├── build.py
 └── src
     └── ...
-</code></pre> <p>As an example, we can create a simple markdown processor by filling in <code>build.py</code> like so:</p> <pre><code class=hl><span class=k>def</span> <span class=nf>build</span><span class=p>(</span><span class=n>ctx</span><span class=p>):</span>
-  <span class=c1># We use the &#39;markdown&#39; and &#39;templating&#39; extensions</span>
-  <span class=n>md</span> <span class=o>=</span> <span class=n>ctx</span><span class=o>.</span><span class=n>ext</span><span class=p>(</span><span class=s2>&quot;markdown&quot;</span><span class=p>)</span>
-  <span class=n>templating</span> <span class=o>=</span> <span class=n>ctx</span><span class=o>.</span><span class=n>ext</span><span class=p>(</span><span class=s2>&quot;templating&quot;</span><span class=p>)</span> <span class=c1># Templating is done using Jinja2</span>
+</code></pre>
+<p>As an example, we can create a simple markdown processor by filling in <code>build.py</code> like so:</p>
+<pre><code class="hl"><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
+  <span class="c1"># We use the &#39;markdown&#39; and &#39;templating&#39; extensions</span>
+  <span class="n">md</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="s2">&quot;markdown&quot;</span><span class="p">)</span>
+  <span class="n">templating</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="s2">&quot;templating&quot;</span><span class="p">)</span> <span class="c1"># Templating is done using Jinja2</span>
 
-  <span class=c1># Also available: templating.from_file(&quot;./build_src/template.html.j2&quot;) relative to build.py</span>
-  <span class=n>template</span> <span class=o>=</span> <span class=n>templating</span><span class=o>.</span><span class=n>from_string</span><span class=p>(</span><span class=sa>r</span><span class=s2>&quot;&quot;&quot;</span>
-<span class=s2>    &lt;!DOCTYPE html&gt;</span>
-<span class=s2>    &lt;html&gt;</span>
-<span class=s2>      &lt;head&gt;</span>
-<span class=s2>        &lt;meta charset=&quot;utf-8&quot;&gt;</span>
-<span class=s2>        &lt;title&gt;{{ title }}&lt;/title&gt;</span>
-<span class=s2>      &lt;/head&gt;</span>
+  <span class="c1"># Also available: templating.from_file(&quot;./build_src/template.html.j2&quot;) relative to build.py</span>
+  <span class="n">template</span> <span class="o">=</span> <span class="n">templating</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;!DOCTYPE html&gt;</span>
+<span class="s2">    &lt;html&gt;</span>
+<span class="s2">      &lt;head&gt;</span>
+<span class="s2">        &lt;meta charset=&quot;utf-8&quot;&gt;</span>
+<span class="s2">        &lt;title&gt;{{ title }}&lt;/title&gt;</span>
+<span class="s2">      &lt;/head&gt;</span>
 
-<span class=s2>      &lt;body&gt;</span>
-<span class=s2>        {{ content }}</span>
-<span class=s2>      &lt;/body&gt;</span>
-<span class=s2>    &lt;/html&gt;</span>
-<span class=s2>  &quot;&quot;&quot;</span><span class=p>)</span>
+<span class="s2">      &lt;body&gt;</span>
+<span class="s2">        {{ content }}</span>
+<span class="s2">      &lt;/body&gt;</span>
+<span class="s2">    &lt;/html&gt;</span>
+<span class="s2">  &quot;&quot;&quot;</span><span class="p">)</span>
 
-  <span class=c1># For each file, render markdown if it&#39;s a &#39;.md&#39; file,</span>
-  <span class=c1># but otherwise just copy it to the output directory.</span>
-  <span class=k>for</span> <span class=n>name</span> <span class=ow>in</span> <span class=n>ctx</span><span class=o>.</span><span class=n>names</span><span class=p>:</span>
-    <span class=k>if</span> <span class=n>name</span><span class=o>.</span><span class=n>endswith</span><span class=p>(</span><span class=s2>&quot;.md&quot;</span><span class=p>):</span>
-      <span class=c1># 1. Read the contents of the file</span>
-      <span class=n>file_contents</span> <span class=o>=</span> <span class=n>ctx</span><span class=o>.</span><span class=n>read_text</span><span class=p>(</span><span class=n>name</span><span class=p>)</span>
+  <span class="c1"># For each file, render markdown if it&#39;s a &#39;.md&#39; file,</span>
+  <span class="c1"># but otherwise just copy it to the output directory.</span>
+  <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">ctx</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.md&quot;</span><span class="p">):</span>
+      <span class="c1"># 1. Read the contents of the file</span>
+      <span class="n">file_contents</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
       
-      <span class=c1># 2. Parse the frontmatter to get a custom &#39;title&#39; attribute for the page.</span>
-      <span class=c1># We use the string &quot;[unnamed page]&quot; as a placeholder if &#39;title&#39; is not defined</span>
-      <span class=n>frontmatter</span><span class=p>,</span> <span class=n>content</span> <span class=o>=</span> <span class=n>md</span><span class=o>.</span><span class=n>parse_frontmatter</span><span class=p>(</span><span class=n>file_contents</span><span class=p>,</span> <span class=n>title</span><span class=o>=</span><span class=s2>&quot;[unnamed page]&quot;</span><span class=p>)</span>
+      <span class="c1"># 2. Parse the frontmatter to get a custom &#39;title&#39; attribute for the page.</span>
+      <span class="c1"># We use the string &quot;[unnamed page]&quot; as a placeholder if &#39;title&#39; is not defined</span>
+      <span class="n">frontmatter</span><span class="p">,</span> <span class="n">content</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">parse_frontmatter</span><span class="p">(</span><span class="n">file_contents</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;[unnamed page]&quot;</span><span class="p">)</span>
 
-      <span class=c1># 3. Render the markdown using the markdown extension.</span>
-      <span class=c1># Note: We use &#39;content&#39; instead of &#39;file_contents&#39; here,</span>
-      <span class=c1># so that we don&#39;t include the raw front matter.</span>
-      <span class=n>rendered_markdown</span> <span class=o>=</span> <span class=n>md</span><span class=o>.</span><span class=n>render</span><span class=p>(</span><span class=n>content</span><span class=p>)</span>
+      <span class="c1"># 3. Render the markdown using the markdown extension.</span>
+      <span class="c1"># Note: We use &#39;content&#39; instead of &#39;file_contents&#39; here,</span>
+      <span class="c1"># so that we don&#39;t include the raw front matter.</span>
+      <span class="n">rendered_markdown</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 
-      <span class=c1># 4. Use our defined template to render out the page.</span>
-      <span class=c1># The &#39;content&#39; variable is defined by the rendered markdown,</span>
-      <span class=c1># and all the front matter variables are passed in. (We care about &#39;title&#39;)</span>
-      <span class=n>rendered_page</span> <span class=o>=</span> <span class=n>template</span><span class=o>.</span><span class=n>render</span><span class=p>(</span><span class=n>content</span><span class=o>=</span><span class=n>rendered_markdown</span><span class=p>,</span> <span class=o>**</span><span class=n>frontmatter</span><span class=p>)</span>
+      <span class="c1"># 4. Use our defined template to render out the page.</span>
+      <span class="c1"># The &#39;content&#39; variable is defined by the rendered markdown,</span>
+      <span class="c1"># and all the front matter variables are passed in. (We care about &#39;title&#39;)</span>
+      <span class="n">rendered_page</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">rendered_markdown</span><span class="p">,</span> <span class="o">**</span><span class="n">frontmatter</span><span class="p">)</span>
 
-      <span class=c1># 5. Write out the rendered page as a .html file.</span>
-      <span class=c1># We use a simple replace() here, but you can put anything here.</span>
-      <span class=c1># Perhaps something like:</span>
-      <span class=c1># </span>
-      <span class=c1>#   base_name = strip_extension(name, &quot;.md&quot;)</span>
-      <span class=c1>#   f&quot;{base_name}.html&quot; if base_name == &quot;index&quot; \</span>
-      <span class=c1>#   else f&quot;{base_name}/index.html&quot;</span>
-      <span class=c1># </span>
-      <span class=n>ctx</span><span class=o>.</span><span class=n>write_text</span><span class=p>(</span><span class=n>name</span><span class=o>.</span><span class=n>replace</span><span class=p>(</span><span class=s2>&quot;.md&quot;</span><span class=p>,</span> <span class=s2>&quot;.html&quot;</span><span class=p>),</span> <span class=n>rendered_page</span><span class=p>)</span>
-    <span class=k>else</span><span class=p>:</span>
-      <span class=n>ctx</span><span class=o>.</span><span class=n>copy</span><span class=p>(</span><span class=n>name</span><span class=p>)</span>
-</code></pre> <p>Then, populate <code>src/index.md</code> with any content you want:</p> <pre><code class=hl>---
+      <span class="c1"># 5. Write out the rendered page as a .html file.</span>
+      <span class="c1"># We use a simple replace() here, but you can put anything here.</span>
+      <span class="c1"># Perhaps something like:</span>
+      <span class="c1"># </span>
+      <span class="c1">#   base_name = strip_extension(name, &quot;.md&quot;)</span>
+      <span class="c1">#   f&quot;{base_name}.html&quot; if base_name == &quot;index&quot; \</span>
+      <span class="c1">#   else f&quot;{base_name}/index.html&quot;</span>
+      <span class="c1"># </span>
+      <span class="n">ctx</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.md&quot;</span><span class="p">,</span> <span class="s2">&quot;.html&quot;</span><span class="p">),</span> <span class="n">rendered_page</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">ctx</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</code></pre>
+<p>Then, populate <code>src/index.md</code> with any content you want:</p>
+<pre><code class="hl">---
 title: My Markdown Page
 ---
 
-<span class=gh>#</span> Hello, world!
+<span class="gh">#</span> Hello, world!
 
-This is a test of markdown with [<span class=nt>sipy</span>](<span class=na>https://github.com/half-cambodian-hacker-man/sipy</span>).
-</code></pre> <p>And simply run:</p> <pre><code class=hl>$ sipy <span class=c1># Build the site</span>
-$ sipy serve <span class=c1># Start a static web server (equivalent to python3 -m http.server)</span>
-</code></pre> </main> <footer> <p><code>sipy</code> is built by <a href=https://anthony.som.codes/ >Anthony Som</a>.</p> </footer> </body> </html>
+This is a test of markdown with [<span class="nt">sipy</span>](<span class="na">https://github.com/half-cambodian-hacker-man/sipy</span>).
+</code></pre>
+<p>And simply run:</p>
+<pre><code class="hl">$ sipy <span class="c1"># Build the site</span>
+$ sipy serve <span class="c1"># Start a static web server (equivalent to python3 -m http.server)</span>
+</code></pre>
+    </main>
+
+    <footer>
+      <p><code>sipy</code> is built by <a href="https://anthony.som.codes/">Anthony Som</a>.</p>
+    </footer>
+  </body>
+</html>
