@@ -43,4 +43,4 @@ class HighlightingRenderer(misaka.HtmlRenderer):
     self.highlighting = highlighting
 
   def blockcode(self, text, lang):
-    return "<pre><code class=\"hl\">{}</pre></code>".format(self.highlighting.highlight(text, lang))
+    return "<pre><code class=\"hl\">{}</code></pre>".format(self.highlighting.highlight(text, lang))
