@@ -34,6 +34,6 @@ def build(ctx: Context):
         }
       )
 
-      ctx.write_text(name[:-len(".md")] + ".html", content)
+      ctx.write_text(name[:-len(".md")] + ".html", minification.minify_html(content))
     else:
       ctx.copy(name)
