@@ -1,3 +1,5 @@
+from sipy.logging import log
+
 from dataclasses import dataclass
 from pathlib import Path
 from os import makedirs
@@ -58,6 +60,8 @@ class FileAccessContext:
 
     with open(target, "w") as f:
       f.write(data)
+    
+    log(name, tag="[+]")
 
 
   def write_data(self, name: str, data: bytes):
@@ -69,11 +73,14 @@ class FileAccessContext:
     with open(target, "wb") as f:
       f.write(data)
 
+    log(name, tag="[+]")
+
 
   def copy(self, name: str):
     """Copy a file from the source directory to the output directory."""
 
     self.write_data(name, self.read_data(name))
+    log(name, tag="[+]")
 
 
 class ExtensionAccessContext:
