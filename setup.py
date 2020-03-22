@@ -11,7 +11,7 @@ setuptools.setup(
     description="A lean static site generator in Python",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/half-cambodian-hacker-man/sipy-gen",
+    url="https://github.com/half-cambodian-hacker-man/sipy",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

@@ -5,7 +5,7 @@
 ## Usage
 
 ```shell
-$ pip3 install git+https://github.com/half-cambodian-hacker-man/sipy-gen.git
+$ pip3 install git+https://github.com/half-cambodian-hacker-man/sipy.git
 $ cd <site>/
 $ sipy
 ```

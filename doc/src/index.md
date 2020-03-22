@@ -11,7 +11,7 @@ title: sipy - A scriptable static site generator.
 `sipy` can be easily installed using `pip`:
 
 ```shell
-$ pip3 install "git+https://github.com/half-cambodian-hacker-man/sipy-gen.git"
+$ pip3 install "git+https://github.com/half-cambodian-hacker-man/sipy.git"
 ```
 
 ## Getting Started
