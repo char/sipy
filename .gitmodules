@@ -1,0 +1,4 @@
+[submodule "doc/repo"]
+	path = doc/repo
+	url = git@github.com:half-cambodian-hacker-man/sipy.git
+	branch = gh-pages
