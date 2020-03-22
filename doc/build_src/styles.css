@@ -121,11 +121,11 @@ footer code {
   display: block;
   overflow-x: auto;
 }
-.hl .k { /* Keywords */
+.hl .k, .hl .gh { /* Keywords */
   font-weight: bold;
   color: hsl(61, 86%, 68%);
 }
 .hl .c1 { color: hsl(248, 7%, 56%); } /* Comments */
-.hl .nb { color: hsl(147, 68%, 72%); } /* Builtins */
+.hl .nb, .hl .nt { color: hsl(147, 68%, 72%); } /* Builtins */
 .hl .s1, .hl .s2 { color: hsl(167, 100%, 74%); } /* Strings */
 .hl .mi { color: hsl(202, 91%, 67%) } /* Integer literals */

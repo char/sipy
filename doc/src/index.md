@@ -79,3 +79,22 @@ def build(ctx):
     else:
       ctx.copy(name)
 ```
+
+Then, populate `src/index.md` with any content you want:
+
+```md
+---
+title: My Markdown Page
+---
+
+# Hello, world!
+
+This is a test of markdown with [sipy](https://github.com/half-cambodian-hacker-man/sipy).
+```
+
+And simply run:
+
+```shell
+$ sipy # Build the site
+$ sipy serve # Start a static web server (equivalent to python3 -m http.server)
+```
