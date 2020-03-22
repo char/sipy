@@ -21,6 +21,7 @@ setuptools.setup(
     python_requires=">=3.8",
     install_requires=[
       "misaka>=2.1.1",
-      "jinja2>=2.11.1"
+      "jinja2>=2.11.1",
+      "PyYAML>=5.3.1"
     ]
 )

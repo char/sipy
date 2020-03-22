@@ -2,10 +2,11 @@ from sipy import Context
 
 from importlib.machinery import SourceFileLoader
 from pathlib import Path
+import argparse
 import os
 
 
-def main():
+def build():
   """
     1. Set up the execution context
     2. Evaluate the target site's build.py (`pwd`/build.py)
@@ -21,6 +22,30 @@ def main():
 
   target_site = SourceFileLoader("target_site", os.path.join(working_directory, "build.py")).load_module()
   target_site.build(ctx)
+
+
+def main():
+  parser = argparse.ArgumentParser()
+  subparsers = parser.add_subparsers(title="actions", dest="action")
+
+  subparsers.add_parser("build")
+  subparsers.add_parser("serve")
+
+  args = parser.parse_args()
+
+  if args.action == "serve":
+    # I'm so sorry.
+
+    import runpy, sys, os
+    try:
+      os.chdir("./out")
+      sys.argv = ["http.server"]
+      runpy.run_module("http.server", {}, "__main__")
+    except FileNotFoundError:
+      print("Could not serve the out/ directory. Does it exist?", file=sys.stderr)
+      exit(1)
+  else:
+    build()
 
 
 if __name__ == "__main__":
