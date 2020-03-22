@@ -83,7 +83,15 @@ class ExtensionAccessContext:
 
   def ext(self, identifier: str):
     # TODO: Caching
-    return import_module("sipy.ext." + identifier)
+    if identifier in self.extension_cache:
+      return self.extension_cache[identifier]
+
+    try:
+      extension = import_module("sipy.ext." + identifier)
+      self.extension_cache[identifier] = extension
+      return extension
+    except ModuleNotFoundError:
+      return None
 
 
 class Context(FileAccessContext, ExtensionAccessContext):

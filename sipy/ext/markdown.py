@@ -1,8 +1,8 @@
-import misaka
-import re
-import yaml
-
 from typing import Tuple
+
+import misaka
+import yaml
+import re
 
 MARKDOWN_EXTENSIONS = ('quote', 'fenced-code', 'footnotes', 'tables')
 FRONTMATTER_BOUNDARY = re.compile(r"^-{3,}\s*$", re.MULTILINE)
@@ -24,7 +24,23 @@ def parse_frontmatter(markdown: str, **default_metadata) -> Tuple[dict, str]:
 
   return metadata, markdown
 
-def render(markdown: str) -> str:
+def render(markdown: str, highlighting = None) -> str:
   """Renders a markdown string to an embeddable HTML string."""
 
+  if highlighting:
+    html_and_highlight = misaka.Markdown(
+      HighlightingRenderer(highlighting),
+      extensions=MARKDOWN_EXTENSIONS
+    )
+
+    return html_and_highlight(markdown)
+
   return misaka.html(markdown, extensions=MARKDOWN_EXTENSIONS)
+
+class HighlightingRenderer(misaka.HtmlRenderer):
+  def __init__(self, highlighting):
+    super().__init__()
+    self.highlighting = highlighting
+
+  def blockcode(self, text, lang):
+    return "<pre><code class=\"hl\">{}</pre></code>".format(self.highlighting.highlight(text, lang))

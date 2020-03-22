@@ -1,0 +1,127 @@
+/* Layout */
+
+body {
+  display: flex;
+  flex-direction: column;
+  font: 16px / 1.6 sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden scroll;
+  word-wrap: break-word;
+}
+
+main {
+  flex: 1;
+  width: calc(100% - 20px);
+}
+
+/* Typography */
+
+h1, h2, h3 {
+  margin-top: 0.5em;
+}
+
+p {
+  margin: 16px auto;
+}
+
+/* Elements (Footer, navbar, etc) */
+
+footer > p {
+  max-width: 52ch;
+  text-align: center;
+}
+
+nav li {
+  display: inline-block;
+  line-height: 2.5;
+}
+
+nav, footer {
+  background: #000;
+  padding: 0.5em;
+}
+
+ul {
+  padding-left: 2em;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+nav li {
+  margin: 0 2ch;
+}
+
+li > ul {
+  margin: 5px 0 15px;
+}
+
+nav a, nav a:hover, footer {
+  color: #eee;
+}
+
+/* Links */
+
+a {
+  color: rgb(0, 112, 255);
+  text-decoration: none;
+}
+
+a:hover {
+  border-bottom: 1px solid;
+}
+
+footer a {
+  color: rgb(0, 255, 242)
+}
+
+/* Code */
+
+pre > code, main {
+  display: block;
+  margin: 10px auto 40px;
+  max-width: 80ch;
+  padding: 0 10px;
+  margin-bottom: 0;
+  margin-bottom: 40px;
+}
+
+pre > code {
+  background: #000;
+  color: #eee;
+  font-size: 16px;
+  font-family: Consolas, monospace;
+  font-weight: normal;
+  padding: 20px;
+  white-space: pre-wrap;
+  max-width: 100%;
+}
+
+pre, code {
+  border-radius: 6px;
+}
+
+code {
+  background: #eef;
+  font-weight: 500;
+  padding: .1em .4em;
+}
+
+/* Syntax Highlighting */
+
+.hl {
+  display: block;
+  overflow-x: auto;
+}
+.hl .k { /* Keywords */
+  font-weight: bold;
+  color: hsl(61, 86%, 68%);
+}
+.hl .c1 { color: hsl(248, 7%, 56%); } /* Comments */
+.hl .nb { color: hsl(147, 68%, 72%); } /* Builtins */
+.hl .s1, .hl .s2 { color: hsl(167, 100%, 74%); } /* Strings */
+.hl .mi { color: hsl(202, 91%, 67%) } /* Integer literals */
