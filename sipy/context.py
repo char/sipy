@@ -80,7 +80,6 @@ class FileAccessContext:
     """Copy a file from the source directory to the output directory."""
 
     self.write_data(name, self.read_data(name))
-    log(name, tag="[+]")
 
 
 class ExtensionAccessContext:
