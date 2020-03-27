@@ -9,7 +9,6 @@ def minify_css(css: str) -> str:
   css = re.sub(r"/\*[\s\S]*?\*/", "", css) # Remove comment
   css = re.sub(r"\s+", " ", css) # Collapse multiple spaces
   css = re.sub(r"#([0-9a-f])\1([0-9a-f])\2([0-9a-f])\3(\s|;)", r"#\1\2\3\4", css) # Replace #aabbcc with #abc
-  css = re.sub(r"url\(([\"'])([^)]*)\1\)", r"url(\2)", css) # Remove quotes from url()
 
   # 2. Then, we emit each rule while performing some transformations.
   # We only want to emit rules with declarations.
