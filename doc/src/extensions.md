@@ -51,6 +51,7 @@ def build(ctx):
 
   metadata, content = md.parse_frontmatter(markdown_file_contents)
   # metadata is a dict, content is a string
+  content = md.render(content)
 
   ctx.write_file(metadata["name"] + ".html", content)
   # >>> [+] document.html
@@ -115,7 +116,7 @@ if __name__ == "__main__":
 
 In Markdown, a fenced code block can have a language attached to it.
 
-By passing in the highlighting extension through `markdown.render(..., highlighting=ctx.ext("highlighting")), the Markdown renderer will automatically highlight the syntax in language-tagged code blocks.
+By passing in the highlighting extension through `markdown.render(..., highlighting=ctx.ext("highlighting"))`, the Markdown renderer will automatically highlight the syntax in language-tagged code blocks.
 
 ```python
 def build(ctx):
