@@ -31,7 +31,12 @@ class FileAccessContext:
 
     for p in self.source_directory.rglob("*"):
       if p.is_file():
-        yield str(p.relative_to(self.source_directory))
+        name = str(p.relative_to(self.source_directory))
+
+        if "__pycache__/" in name and name.endswith(".pyc"):
+          continue
+
+        yield name
 
 
   def read_text(self, name: str) -> str:

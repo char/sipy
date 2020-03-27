@@ -19,6 +19,7 @@ def build(ctx: Context):
   md = ctx.ext("markdown")
   highlighting = ctx.ext("highlighting")
   minification = ctx.ext("minification")
+  direct_render = ctx.ext("direct_render")
 
   markdown_template = templating.from_file("build_src/markdown_template.html.j2")
 
@@ -49,5 +50,7 @@ def build(ctx: Context):
       )
 
       ctx.write_text(pretty_link(name[:-len(".md")] + ".html"), minification.minify_html(content))
+    elif name.endswith(".py"):
+      direct_render.run(ctx, name)
     else:
       ctx.copy(name)

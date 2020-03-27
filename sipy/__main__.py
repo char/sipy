@@ -1,6 +1,7 @@
 from sipy import Context
 
 from importlib.machinery import SourceFileLoader
+from types import ModuleType
 from pathlib import Path
 import argparse
 import os
@@ -20,7 +21,8 @@ def build():
 
   ctx = Context(Path(source_directory), Path(output_directory))
 
-  target_site = SourceFileLoader("target_site", os.path.join(working_directory, "build.py")).load_module()
+  target_site = ModuleType("target_site.build")
+  SourceFileLoader("target_site.build", os.path.join(working_directory, "build.py")).exec_module(target_site)
   target_site.build(ctx)
 
 
