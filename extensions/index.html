@@ -1,211 +1,136 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
+<!DOCTYPE html><html> <head><meta charset=utf-8><title>Extensions - sipy</title><style>body{display:flex;flex-direction:column;font:16px / 1.6 sans-serif;margin:0;min-height:100vh;overflow:hidden scroll;word-wrap:break-word}main{flex:1;width:calc(100% - 20px)}h1,h2,h3{margin-top:0.5em}p{margin:16px auto}footer>p{max-width:52ch;text-align:center}nav li{display:inline-block;line-height:2.5}nav,footer{background:#000;padding:0.5em}ul{padding-left:2em}nav ul{margin:0;padding:0;text-align:center}nav li{margin:0 2ch}li>ul{margin:5px 0 15px}nav a,nav a:hover,footer{color:#eee}a{color:rgb(0, 112, 255);text-decoration:none}a:hover{border-bottom:1px solid}footer a{color:rgb(123, 218, 255)}pre>code,main{display:block;margin:10px auto 40px;max-width:88ch;padding:0 10px;margin-bottom:40px}pre>code{background:#000;color:#eee;font-weight:normal;padding:20px;white-space:pre-wrap;max-width:100%}pre,code{border-radius:6px}code{font-family:'Consolas', 'Monaco', monospace;font-size:14px;background:#eef;font-weight:500;padding:.1em .4em}footer code{background:#111116}.hl{display:block;overflow-x:auto}.hl .k,.hl .gh{font-weight:bold;color:hsl(61, 86%, 68%)}.hl .c1{color:hsl(248, 7%, 56%)}.hl .nb,.hl .nt{color:hsl(147, 68%, 72%)}.hl .s1,.hl .s2{color:hsl(167, 100%, 74%)}.hl .mi,.hl .si{color:hsl(202, 91%, 67%)}</style></head> <body> <nav> <ul> <li><a href=/ >Home</a></li> <li><a href=/extensions/ >Extensions</a></li> </ul> </nav> <main> <h1>Extensions</h1> <p>The core of <code>sipy</code> only provides a select number of primitives:</p> <ul> <li><code>read_text</code> and <code>read_data</code>, to read from the <code>src/</code> directory.</li> <li><code>write_text</code> and <code>write_data</code>, to write to the <code>out/</code> directory.</li> </ul> <p>But, most static sites need:</p> <ul> <li>Templates for a consistent feel, with injected content</li> <li>A more ergonomic way of writing content than plain HTML</li> <li>Optimization of site output</li> </ul> <h2>Templating</h2> <p><code>sipy</code> uses <a href=https://jinja.palletsprojects.com/ >Jinja2</a> for templating. To use it in a build script, simply use either of the <code>templating.from_file</code> or <code>templating.from_string</code> methods:</p> <pre><code class=hl><span class=k>def</span> <span class=nf>build</span><span class=p>(</span><span class=n>ctx</span><span class=p>):</span>
+  <span class=n>templating</span> <span class=o>=</span> <span class=n>ctx</span><span class=o>.</span><span class=n>ext</span><span class=p>(</span><span class=s2>&quot;templating&quot;</span><span class=p>)</span>
+  <span class=n>my_template</span> <span class=o>=</span> <span class=n>templating</span><span class=o>.</span><span class=n>from_file</span><span class=p>(</span><span class=s2>&quot;./build_src/my_template.html.j2&quot;</span><span class=p>)</span>
+  <span class=c1># my_template.html.j2: &lt;html&gt;&lt;body&gt;{{ content }}&lt;/body&gt;&lt;/html&gt;</span>
 
-    <title>Extensions - sipy</title>
-    <style>body{display:flex;flex-direction:column;font:16px / 1.6 sans-serif;margin:0;min-height:100vh;overflow:hidden scroll;word-wrap:break-word}main{flex:1;width:calc(100% - 20px)}h1,h2,h3{margin-top:0.5em}p{margin:16px auto}footer>p{max-width:52ch;text-align:center}nav li{display:inline-block;line-height:2.5}nav,footer{background:#000;padding:0.5em}ul{padding-left:2em}nav ul{margin:0;padding:0;text-align:center}nav li{margin:0 2ch}li>ul{margin:5px 0 15px}nav a,nav a:hover,footer{color:#eee}a{color:rgb(0, 112, 255);text-decoration:none}a:hover{border-bottom:1px solid}footer a{color:rgb(123, 218, 255)}pre>code,main{display:block;margin:10px auto 40px;max-width:88ch;padding:0 10px;margin-bottom:40px}pre>code{background:#000;color:#eee;font-weight:normal;padding:20px;white-space:pre-wrap;max-width:100%}pre,code{border-radius:6px}code{font-family:'Consolas', 'Monaco', monospace;font-size:14px;background:#eef;font-weight:500;padding:.1em .4em}footer code{background:#111116}.hl{display:block;overflow-x:auto}.hl .k,.hl .gh{font-weight:bold;color:hsl(61, 86%, 68%)}.hl .c1{color:hsl(248, 7%, 56%)}.hl .nb,.hl .nt{color:hsl(147, 68%, 72%)}.hl .s1,.hl .s2{color:hsl(167, 100%, 74%)}.hl .mi,.hl .si{color:hsl(202, 91%, 67%)}</style>
-  </head>
+  <span class=c1># Later...</span>
+  <span class=n>my_template</span><span class=o>.</span><span class=n>render</span><span class=p>(</span><span class=n>content</span><span class=o>=</span><span class=s2>&quot;&lt;p&gt;Hello, world!&lt;/p&gt;&quot;</span><span class=p>)</span>
+</code></pre> <h2>Markdown</h2> <p><a href=https://commonmark.org/ >Markdown</a> is a simple markup language.</p> <p>You can use markdown with <code>sipy</code> with the <code>markdown</code> extension&#39;s <code>parse_frontmatter</code> and <code>render</code> methods.</p> <pre><code class=hl><span class=k>def</span> <span class=nf>build</span><span class=p>(</span><span class=n>ctx</span><span class=p>):</span>
+  <span class=n>md</span> <span class=o>=</span> <span class=n>ctx</span><span class=o>.</span><span class=n>ext</span><span class=p>(</span><span class=s2>&quot;markdown&quot;</span><span class=p>)</span>
 
-  <body>
-    <nav>
-      <ul>
-        
-          <li><a href="/">Home</a></li>
-        
-          <li><a href="/extensions/">Extensions</a></li>
-        
-      </ul>
-    </nav>
+  <span class=n>markdown_file_contents</span> <span class=o>=</span> <span class=n>ctx</span><span class=o>.</span><span class=n>read_text</span><span class=p>(</span><span class=s2>&quot;my_document.md&quot;</span><span class=p>)</span>
+  <span class=c1># my_document.md:</span>
+  <span class=c1># ---</span>
+  <span class=c1># name: document</span>
+  <span class=c1># ---</span>
+  <span class=c1># </span>
+  <span class=c1># # Markdown</span>
+  <span class=c1># </span>
+  <span class=c1># Hello, world!</span>
 
-    <main>
-      <h1>Extensions</h1>
+  <span class=n>metadata</span><span class=p>,</span> <span class=n>content</span> <span class=o>=</span> <span class=n>md</span><span class=o>.</span><span class=n>parse_frontmatter</span><span class=p>(</span><span class=n>markdown_file_contents</span><span class=p>)</span>
+  <span class=c1># metadata is a dict, content is a string</span>
+  <span class=n>content</span> <span class=o>=</span> <span class=n>md</span><span class=o>.</span><span class=n>render</span><span class=p>(</span><span class=n>content</span><span class=p>)</span>
 
-<p>The core of <code>sipy</code> only provides a select number of primitives:</p>
+  <span class=n>ctx</span><span class=o>.</span><span class=n>write_file</span><span class=p>(</span><span class=n>metadata</span><span class=p>[</span><span class=s2>&quot;name&quot;</span><span class=p>]</span> <span class=o>+</span> <span class=s2>&quot;.html&quot;</span><span class=p>,</span> <span class=n>content</span><span class=p>)</span>
+  <span class=c1># &gt;&gt;&gt; [+] document.html</span>
+</code></pre> <h2>Highlighting</h2> <p>Syntax highlighting is done with <code>pygments</code>.</p> <p><strong>Note:</strong> <code>pygments</code> is <strong>not</strong> defined as a dependency of <code>sipy</code>. You will have to install it manually. If <code>pygments</code> is not present, <code>ctx.ext(&quot;highlighting&quot;)</code> will return <code>None</code>.</p> <p>The highlighting extension can be used in two ways:</p> <h3>Direct Usage</h3> <pre><code class=hl><span class=k>def</span> <span class=nf>build</span><span class=p>(</span><span class=n>ctx</span><span class=p>):</span>
+  <span class=n>highlighting</span> <span class=o>=</span> <span class=n>ctx</span><span class=o>.</span><span class=n>ext</span><span class=p>(</span><span class=s2>&quot;highlighting&quot;</span><span class=p>)</span>
+  <span class=k>if</span> <span class=n>highlighting</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span>
+    <span class=k>raise</span> <span class=ne>Exception</span><span class=p>(</span><span class=s2>&quot;Install pygments!&quot;</span><span class=p>)</span>
 
-<ul>
-<li><code>read_text</code> and <code>read_data</code>, to read from the <code>src/</code> directory.</li>
-<li><code>write_text</code> and <code>write_data</code>, to write to the <code>out/</code> directory.</li>
-</ul>
+  <span class=n>python_code</span> <span class=o>=</span> <span class=s1>&#39;&#39;&#39;</span><span class=se>\</span>
+<span class=s1>def main():</span>
+<span class=s1>  print(&quot;Hello, world!&quot;)</span>
 
-<p>But, most static sites need:</p>
+<span class=s1>if __name__ == &quot;__main__&quot;:</span>
+<span class=s1>  main()</span><span class=se>\</span>
+<span class=s1>&#39;&#39;&#39;</span>
 
-<ul>
-<li>Templates for a consistent feel, with injected content</li>
-<li>A more ergonomic way of writing content than plain HTML</li>
-<li>Optimization of site output</li>
-</ul>
+  <span class=n>highlighted_code</span> <span class=o>=</span> <span class=n>highlighting</span><span class=o>.</span><span class=n>highlight</span><span class=p>(</span><span class=n>python_code</span><span class=p>,</span> <span class=s2>&quot;python&quot;</span><span class=p>)</span>
+  <span class=n>ctx</span><span class=o>.</span><span class=n>write_text</span><span class=p>(</span><span class=s2>&quot;highlighted.html&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;&quot;</span>
+<span class=s2>    &lt;html&gt;</span>
+<span class=s2>      &lt;head&gt;</span>
+<span class=s2>        &lt;style&gt;</span>
+<span class=s2>          /* Syntax highlighting styles */</span>
+<span class=s2>          .hl {</span>
+<span class=s2>            display: block;</span>
+<span class=s2>            overflow-x: auto;</span>
+<span class=s2>            </span>
+<span class=s2>            background: black;</span>
+<span class=s2>            color: white;</span>
+<span class=s2>          }</span>
+<span class=s2>          .hl .k, .hl .gh { /* Keywords */</span>
+<span class=s2>            font-weight: bold;</span>
+<span class=s2>            color: hsl(61, 86%, 68%);</span>
+<span class=s2>          }</span>
+<span class=s2>          .hl .c1 { color: hsl(248, 7%, 56%); } /* Comments */</span>
+<span class=s2>          .hl .nb, .hl .nt { color: hsl(147, 68%, 72%); } /* Builtins */</span>
+<span class=s2>          .hl .s1, .hl .s2 { color: hsl(167, 100%, 74%); } /* Strings */</span>
+<span class=s2>          .hl .mi { color: hsl(202, 91%, 67%) } /* Integers */</span>
+<span class=s2>        &lt;/style&gt;</span>
+<span class=s2>      &lt;/head&gt;</span>
 
-<h2>Templating</h2>
+<span class=s2>      &lt;body&gt;</span>
+<span class=s2>        &lt;pre&gt;&lt;code class=&quot;hl&quot;&gt;</span><span class=si>{}</span><span class=s2>&lt;/code&gt;&lt;/pre&gt;</span>
+<span class=s2>      &lt;/body&gt;</span>
+<span class=s2>    &lt;/html&gt;</span>
+<span class=s2>  &quot;&quot;&quot;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>highlighted_code</span><span class=p>))</span>
+</code></pre> <h3>Usage with Markdown</h3> <p>In Markdown, a fenced code block can have a language attached to it.</p> <p>By passing in the highlighting extension through <code>markdown.render(..., highlighting=ctx.ext(&quot;highlighting&quot;))</code>, the Markdown renderer will automatically highlight the syntax in language-tagged code blocks.</p> <pre><code class=hl><span class=k>def</span> <span class=nf>build</span><span class=p>(</span><span class=n>ctx</span><span class=p>):</span>
+  <span class=n>md</span> <span class=o>=</span> <span class=n>ctx</span><span class=o>.</span><span class=n>ext</span><span class=p>(</span><span class=s2>&quot;markdown&quot;</span><span class=p>)</span>
+  <span class=n>hl</span> <span class=o>=</span> <span class=n>ctx</span><span class=o>.</span><span class=n>ext</span><span class=p>(</span><span class=s2>&quot;highlighting&quot;</span><span class=p>)</span>
+  <span class=n>tplt</span> <span class=o>=</span> <span class=n>ctx</span><span class=o>.</span><span class=n>ext</span><span class=p>(</span><span class=s2>&quot;templating&quot;</span><span class=p>)</span>
 
-<p><code>sipy</code> uses <a href="https://jinja.palletsprojects.com/">Jinja2</a> for templating. To use it in a build script, simply use either of the <code>templating.from_file</code> or <code>templating.from_string</code> methods:</p>
-<pre><code class="hl"><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
-  <span class="n">templating</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="s2">&quot;templating&quot;</span><span class="p">)</span>
-  <span class="n">my_template</span> <span class="o">=</span> <span class="n">templating</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;./build_src/my_template.html.j2&quot;</span><span class="p">)</span>
-  <span class="c1"># my_template.html.j2: &lt;html&gt;&lt;body&gt;{{ content }}&lt;/body&gt;&lt;/html&gt;</span>
+  <span class=n>content</span> <span class=o>=</span> <span class=n>ctx</span><span class=o>.</span><span class=n>read_text</span><span class=p>(</span><span class=s2>&quot;highlighting.md&quot;</span><span class=p>)</span>
+  <span class=n>metadata</span><span class=p>,</span> <span class=n>content</span> <span class=o>=</span> <span class=n>md</span><span class=o>.</span><span class=n>parse_frontmatter</span><span class=p>(</span><span class=n>content</span><span class=p>)</span>
+  <span class=n>content</span> <span class=o>=</span> <span class=n>md</span><span class=o>.</span><span class=n>render</span><span class=p>(</span><span class=n>content</span><span class=p>)</span>
 
-  <span class="c1"># Later...</span>
-  <span class="n">my_template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s2">&quot;&lt;p&gt;Hello, world!&lt;/p&gt;&quot;</span><span class="p">)</span>
-</code></pre>
-<h2>Markdown</h2>
+  <span class=n>template</span> <span class=o>=</span> <span class=n>tplt</span><span class=o>.</span><span class=n>from_string</span><span class=p>(</span><span class=s2>&quot;&quot;&quot;</span>
+<span class=s2>    &lt;html&gt;</span>
+<span class=s2>      &lt;head&gt;</span>
+<span class=s2>        &lt;style&gt;</span>
+<span class=s2>          /* Syntax highlighting styles */</span>
+<span class=s2>          .hl {</span>
+<span class=s2>            display: block;</span>
+<span class=s2>            overflow-x: auto;</span>
+<span class=s2>            </span>
+<span class=s2>            background: black;</span>
+<span class=s2>            color: white;</span>
+<span class=s2>          }</span>
+<span class=s2>          .hl .k, .hl .gh { /* Keywords */</span>
+<span class=s2>            font-weight: bold;</span>
+<span class=s2>            color: hsl(61, 86%, 68%);</span>
+<span class=s2>          }</span>
+<span class=s2>          .hl .c1 { color: hsl(248, 7%, 56%); } /* Comments */</span>
+<span class=s2>          .hl .nb, .hl .nt { color: hsl(147, 68%, 72%); } /* Builtins */</span>
+<span class=s2>          .hl .s1, .hl .s2 { color: hsl(167, 100%, 74%); } /* Strings */</span>
+<span class=s2>          .hl .mi { color: hsl(202, 91%, 67%) } /* Integers */</span>
+<span class=s2>        &lt;/style&gt;</span>
+<span class=s2>      &lt;/head&gt;</span>
+<span class=s2>      &lt;body&gt;</span>
+<span class=s2>        {{ content }}</span>
+<span class=s2>      &lt;/body&gt;</span>
+<span class=s2>    &lt;/html&gt;</span>
+<span class=s2>  &quot;&quot;&quot;</span><span class=p>)</span>
 
-<p><a href="https://commonmark.org/">Markdown</a> is a simple markup language.</p>
+  <span class=c1># &#39;content&#39; is a highlighted &lt;pre&gt;&lt;code&gt;...&lt;/code&gt;&lt;/pre&gt; element</span>
+  <span class=n>ctx</span><span class=o>.</span><span class=n>write_text</span><span class=p>(</span><span class=s2>&quot;highlighting.html&quot;</span><span class=p>,</span> <span class=n>template</span><span class=o>.</span><span class=n>render</span><span class=p>(</span><span class=n>content</span><span class=o>=</span><span class=n>content</span><span class=p>))</span>
+</code></pre> <h2>Minification</h2> <p>Minification provides two methods: <code>minify_css</code> and <code>minify_html</code>.</p> <p><strong>Note:</strong> To use <code>minify_html</code>, you need the <code>htmlmin</code> package. It will silently fail over to the raw HTML otherwise.</p> <pre><code class=hl><span class=k>def</span> <span class=nf>build</span><span class=p>(</span><span class=n>ctx</span><span class=p>):</span>
+  <span class=n>mini</span> <span class=o>=</span> <span class=n>ctx</span><span class=o>.</span><span class=n>ext</span><span class=p>(</span><span class=s2>&quot;minification&quot;</span><span class=p>)</span>
+  <span class=n>tplt</span> <span class=o>=</span> <span class=n>ctx</span><span class=o>.</span><span class=n>ext</span><span class=p>(</span><span class=s2>&quot;templating&quot;</span><span class=p>)</span>
 
-<p>You can use markdown with <code>sipy</code> with the <code>markdown</code> extension&#39;s <code>parse_frontmatter</code> and <code>render</code> methods.</p>
-<pre><code class="hl"><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
-  <span class="n">md</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="s2">&quot;markdown&quot;</span><span class="p">)</span>
+  <span class=n>template</span> <span class=o>=</span> <span class=n>tplt</span><span class=o>.</span><span class=n>from_string</span><span class=p>(</span><span class=s2>&quot;&quot;&quot;</span>
+<span class=s2>    &lt;html&gt;</span>
+<span class=s2>      &lt;head&gt;</span>
+<span class=s2>        &lt;style&gt;{{ styles }}&lt;/style&gt;</span>
+<span class=s2>      &lt;/head&gt;</span>
+<span class=s2>      &lt;body&gt;</span>
+<span class=s2>        {{ content }}</span>
+<span class=s2>      &lt;/body&gt;</span>
+<span class=s2>    &lt;/html&gt;</span>
+<span class=s2>  &quot;&quot;&quot;</span><span class=p>)</span>
 
-  <span class="n">markdown_file_contents</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="s2">&quot;my_document.md&quot;</span><span class="p">)</span>
-  <span class="c1"># my_document.md:</span>
-  <span class="c1"># ---</span>
-  <span class="c1"># name: document</span>
-  <span class="c1"># ---</span>
-  <span class="c1"># </span>
-  <span class="c1"># # Markdown</span>
-  <span class="c1"># </span>
-  <span class="c1"># Hello, world!</span>
-
-  <span class="n">metadata</span><span class="p">,</span> <span class="n">content</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">parse_frontmatter</span><span class="p">(</span><span class="n">markdown_file_contents</span><span class="p">)</span>
-  <span class="c1"># metadata is a dict, content is a string</span>
-
-  <span class="n">ctx</span><span class="o">.</span><span class="n">write_file</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.html&quot;</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
-  <span class="c1"># &gt;&gt;&gt; [+] document.html</span>
-</code></pre>
-<h2>Highlighting</h2>
-
-<p>Syntax highlighting is done with <code>pygments</code>.</p>
-
-<p><strong>Note:</strong> <code>pygments</code> is <strong>not</strong> defined as a dependency of <code>sipy</code>. You will have to install it manually. If <code>pygments</code> is not present, <code>ctx.ext(&quot;highlighting&quot;)</code> will return <code>None</code>.</p>
-
-<p>The highlighting extension can be used in two ways:</p>
-
-<h3>Direct Usage</h3>
-<pre><code class="hl"><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
-  <span class="n">highlighting</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="s2">&quot;highlighting&quot;</span><span class="p">)</span>
-  <span class="k">if</span> <span class="n">highlighting</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Install pygments!&quot;</span><span class="p">)</span>
-
-  <span class="n">python_code</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span><span class="se">\</span>
-<span class="s1">def main():</span>
-<span class="s1">  print(&quot;Hello, world!&quot;)</span>
-
-<span class="s1">if __name__ == &quot;__main__&quot;:</span>
-<span class="s1">  main()</span><span class="se">\</span>
-<span class="s1">&#39;&#39;&#39;</span>
-
-  <span class="n">highlighted_code</span> <span class="o">=</span> <span class="n">highlighting</span><span class="o">.</span><span class="n">highlight</span><span class="p">(</span><span class="n">python_code</span><span class="p">,</span> <span class="s2">&quot;python&quot;</span><span class="p">)</span>
-  <span class="n">ctx</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;highlighted.html&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    &lt;html&gt;</span>
-<span class="s2">      &lt;head&gt;</span>
-<span class="s2">        &lt;style&gt;</span>
-<span class="s2">          /* Syntax highlighting styles */</span>
-<span class="s2">          .hl {</span>
-<span class="s2">            display: block;</span>
-<span class="s2">            overflow-x: auto;</span>
-<span class="s2">            </span>
-<span class="s2">            background: black;</span>
-<span class="s2">            color: white;</span>
-<span class="s2">          }</span>
-<span class="s2">          .hl .k, .hl .gh { /* Keywords */</span>
-<span class="s2">            font-weight: bold;</span>
-<span class="s2">            color: hsl(61, 86%, 68%);</span>
-<span class="s2">          }</span>
-<span class="s2">          .hl .c1 { color: hsl(248, 7%, 56%); } /* Comments */</span>
-<span class="s2">          .hl .nb, .hl .nt { color: hsl(147, 68%, 72%); } /* Builtins */</span>
-<span class="s2">          .hl .s1, .hl .s2 { color: hsl(167, 100%, 74%); } /* Strings */</span>
-<span class="s2">          .hl .mi { color: hsl(202, 91%, 67%) } /* Integers */</span>
-<span class="s2">        &lt;/style&gt;</span>
-<span class="s2">      &lt;/head&gt;</span>
-
-<span class="s2">      &lt;body&gt;</span>
-<span class="s2">        &lt;pre&gt;&lt;code class=&quot;hl&quot;&gt;</span><span class="si">{}</span><span class="s2">&lt;/code&gt;&lt;/pre&gt;</span>
-<span class="s2">      &lt;/body&gt;</span>
-<span class="s2">    &lt;/html&gt;</span>
-<span class="s2">  &quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">highlighted_code</span><span class="p">))</span>
-</code></pre>
-<h3>Usage with Markdown</h3>
-
-<p>In Markdown, a fenced code block can have a language attached to it.</p>
-
-<p>By passing in the highlighting extension through `markdown.render(..., highlighting=ctx.ext(<q>highlighting</q>)), the Markdown renderer will automatically highlight the syntax in language-tagged code blocks.</p>
-<pre><code class="hl"><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
-  <span class="n">md</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="s2">&quot;markdown&quot;</span><span class="p">)</span>
-  <span class="n">hl</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="s2">&quot;highlighting&quot;</span><span class="p">)</span>
-  <span class="n">tplt</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="s2">&quot;templating&quot;</span><span class="p">)</span>
-
-  <span class="n">content</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="s2">&quot;highlighting.md&quot;</span><span class="p">)</span>
-  <span class="n">metadata</span><span class="p">,</span> <span class="n">content</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">parse_frontmatter</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-  <span class="n">content</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-
-  <span class="n">template</span> <span class="o">=</span> <span class="n">tplt</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    &lt;html&gt;</span>
-<span class="s2">      &lt;head&gt;</span>
-<span class="s2">        &lt;style&gt;</span>
-<span class="s2">          /* Syntax highlighting styles */</span>
-<span class="s2">          .hl {</span>
-<span class="s2">            display: block;</span>
-<span class="s2">            overflow-x: auto;</span>
-<span class="s2">            </span>
-<span class="s2">            background: black;</span>
-<span class="s2">            color: white;</span>
-<span class="s2">          }</span>
-<span class="s2">          .hl .k, .hl .gh { /* Keywords */</span>
-<span class="s2">            font-weight: bold;</span>
-<span class="s2">            color: hsl(61, 86%, 68%);</span>
-<span class="s2">          }</span>
-<span class="s2">          .hl .c1 { color: hsl(248, 7%, 56%); } /* Comments */</span>
-<span class="s2">          .hl .nb, .hl .nt { color: hsl(147, 68%, 72%); } /* Builtins */</span>
-<span class="s2">          .hl .s1, .hl .s2 { color: hsl(167, 100%, 74%); } /* Strings */</span>
-<span class="s2">          .hl .mi { color: hsl(202, 91%, 67%) } /* Integers */</span>
-<span class="s2">        &lt;/style&gt;</span>
-<span class="s2">      &lt;/head&gt;</span>
-<span class="s2">      &lt;body&gt;</span>
-<span class="s2">        {{ content }}</span>
-<span class="s2">      &lt;/body&gt;</span>
-<span class="s2">    &lt;/html&gt;</span>
-<span class="s2">  &quot;&quot;&quot;</span><span class="p">)</span>
-
-  <span class="c1"># &#39;content&#39; is a highlighted &lt;pre&gt;&lt;code&gt;...&lt;/code&gt;&lt;/pre&gt; element</span>
-  <span class="n">ctx</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;highlighting.html&quot;</span><span class="p">,</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">content</span><span class="p">))</span>
-</code></pre>
-<h2>Minification</h2>
-
-<p>Minification provides two methods: <code>minify_css</code> and <code>minify_html</code>.</p>
-
-<p><strong>Note:</strong> To use <code>minify_html</code>, you need the <code>htmlmin</code> package. It will silently fail over to the raw HTML otherwise.</p>
-<pre><code class="hl"><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
-  <span class="n">mini</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="s2">&quot;minification&quot;</span><span class="p">)</span>
-  <span class="n">tplt</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="s2">&quot;templating&quot;</span><span class="p">)</span>
-
-  <span class="n">template</span> <span class="o">=</span> <span class="n">tplt</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    &lt;html&gt;</span>
-<span class="s2">      &lt;head&gt;</span>
-<span class="s2">        &lt;style&gt;{{ styles }}&lt;/style&gt;</span>
-<span class="s2">      &lt;/head&gt;</span>
-<span class="s2">      &lt;body&gt;</span>
-<span class="s2">        {{ content }}</span>
-<span class="s2">      &lt;/body&gt;</span>
-<span class="s2">    &lt;/html&gt;</span>
-<span class="s2">  &quot;&quot;&quot;</span><span class="p">)</span>
-
-  <span class="n">styles</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="s2">&quot;styles.css&quot;</span><span class="p">)</span>
-  <span class="n">styles</span> <span class="o">=</span> <span class="n">mini</span><span class="o">.</span><span class="n">minify_css</span><span class="p">(</span><span class="n">styles</span><span class="p">)</span>
+  <span class=n>styles</span> <span class=o>=</span> <span class=n>ctx</span><span class=o>.</span><span class=n>read_text</span><span class=p>(</span><span class=s2>&quot;styles.css&quot;</span><span class=p>)</span>
+  <span class=n>styles</span> <span class=o>=</span> <span class=n>mini</span><span class=o>.</span><span class=n>minify_css</span><span class=p>(</span><span class=n>styles</span><span class=p>)</span>
 
 
-  <span class="n">content</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    &lt;p&gt;Hello, world!&lt;/p&gt;</span>
-<span class="s2">    &lt;p&gt;This is my minified HTML document.&lt;/p&gt;</span>
-<span class="s2">  &quot;&quot;&quot;</span>
+  <span class=n>content</span> <span class=o>=</span> <span class=s2>&quot;&quot;&quot;</span>
+<span class=s2>    &lt;p&gt;Hello, world!&lt;/p&gt;</span>
+<span class=s2>    &lt;p&gt;This is my minified HTML document.&lt;/p&gt;</span>
+<span class=s2>  &quot;&quot;&quot;</span>
 
-  <span class="n">output_html</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">content</span><span class="p">,</span> <span class="n">styles</span><span class="o">=</span><span class="n">styles</span><span class="p">)</span>
-  <span class="n">output_html</span> <span class="o">=</span> <span class="n">mini</span><span class="o">.</span><span class="n">minify_html</span><span class="p">(</span><span class="n">output_html</span><span class="p">)</span>
+  <span class=n>output_html</span> <span class=o>=</span> <span class=n>template</span><span class=o>.</span><span class=n>render</span><span class=p>(</span><span class=n>content</span><span class=o>=</span><span class=n>content</span><span class=p>,</span> <span class=n>styles</span><span class=o>=</span><span class=n>styles</span><span class=p>)</span>
+  <span class=n>output_html</span> <span class=o>=</span> <span class=n>mini</span><span class=o>.</span><span class=n>minify_html</span><span class=p>(</span><span class=n>output_html</span><span class=p>)</span>
 
-  <span class="n">ctx</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;min.html&quot;</span><span class="p">,</span> <span class="n">output_html</span><span class="p">)</span>
-</code></pre>
-    </main>
-
-    <footer>
-      <p><code>sipy</code> is built by <a href="https://anthony.som.codes/">Anthony Som</a>.</p>
-    </footer>
-  </body>
-</html>
+  <span class=n>ctx</span><span class=o>.</span><span class=n>write_text</span><span class=p>(</span><span class=s2>&quot;min.html&quot;</span><span class=p>,</span> <span class=n>output_html</span><span class=p>)</span>
+</code></pre> </main> <footer> <p><code>sipy</code> is built by <a href=https://anthony.som.codes/ >Anthony Som</a>.</p> </footer> </body> </html>
