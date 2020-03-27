@@ -2,10 +2,10 @@ from importlib.machinery import SourceFileLoader
 from types import ModuleType
 
 def run(ctx, name, out_name=None, *args, **kwargs):
-  out_name = out_name or name[:3]
+  out_name = out_name or name[:-3]
 
   module_name = "__direct_render__." + name
-  loader = SourceFileLoader(module_name, ctx.source_directory.joinpath(name).resolve())
+  loader = SourceFileLoader(module_name, str(ctx.source_directory.joinpath(name).resolve()))
   script_module = ModuleType(module_name)
   loader.exec_module(script_module)
 
