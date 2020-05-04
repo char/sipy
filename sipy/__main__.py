@@ -4,6 +4,7 @@ from importlib.machinery import SourceFileLoader
 from types import ModuleType
 from pathlib import Path
 import argparse
+import sys
 import os
 
 
@@ -15,6 +16,7 @@ def build():
   """
 
   working_directory = os.getcwd()
+  sys.path.append(working_directory)
 
   source_directory = os.path.join(working_directory, "src")
   output_directory = os.path.join(working_directory, "out")
