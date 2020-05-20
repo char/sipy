@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="sipy",
-    version="0.1.1",
+    version="0.2.0",
     author="half cambodian hacker man",
     author_email="half-kh-hacker@hackery.site",
     description="A lean static site generator in Python",
@@ -22,7 +22,8 @@ setuptools.setup(
     install_requires=[
       "misaka>=2.1.1",
       "jinja2>=2.11.1",
-      "PyYAML>=5.3.1"
+      "PyYAML>=5.3.1",
+      "watchdog>=0.10.2"
     ],
     entry_points={
       "console_scripts": [
