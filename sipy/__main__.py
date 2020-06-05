@@ -22,13 +22,16 @@ def build():
   working_directory = os.getcwd()
   sys.path.append(working_directory)
 
-  source_directory = os.path.join(working_directory, SOURCE_DIRECTORY)
-  output_directory = os.path.join(working_directory, OUTPUT_DIRECTORY)
+  target_site = ModuleType("build")
+  SourceFileLoader("build", os.path.join(working_directory, "build.py")).exec_module(target_site)
+
+  source_directory_name = target_site.source_directory_name or SOURCE_DIRECTORY
+  output_directory_name = target_site.output_directory_name or OUTPUT_DIRECTORY
+
+  source_directory = os.path.join(working_directory, source_directory_name)
+  output_directory = os.path.join(working_directory, output_directory_name)
 
   ctx = Context(Path(source_directory), Path(output_directory))
-
-  target_site = ModuleType("target_site.build")
-  SourceFileLoader("target_site.build", os.path.join(working_directory, "build.py")).exec_module(target_site)
   target_site.build(ctx)
 
 

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="sipy",
-    version="0.2.0",
+    version="0.3.0",
     author="half cambodian hacker man",
     author_email="half-kh-hacker@hackery.site",
     description="A lean static site generator in Python",
