@@ -25,8 +25,8 @@ def build():
   target_site = ModuleType("build")
   SourceFileLoader("build", os.path.join(working_directory, "build.py")).exec_module(target_site)
 
-  source_directory_name = target_site.source_directory_name or SOURCE_DIRECTORY
-  output_directory_name = target_site.output_directory_name or OUTPUT_DIRECTORY
+  source_directory_name = getattr(target_site, "source_directory_name", SOURCE_DIRECTORY)
+  output_directory_name = getattr(target_site, "output_directory_name", OUTPUT_DIRECTORY)
 
   source_directory = os.path.join(working_directory, source_directory_name)
   output_directory = os.path.join(working_directory, output_directory_name)
