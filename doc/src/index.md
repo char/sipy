@@ -11,7 +11,7 @@ title: sipy - A scriptable static site generator.
 `sipy` can be easily installed using `pip`:
 
 ```shell
-$ pip3 install "git+https://github.com/half-cambodian-hacker-man/sipy.git"
+$ pip3 install "git+https://github.com/videogame-hacker/sipy.git"
 ```
 
 ## Getting Started
@@ -90,7 +90,7 @@ title: My Markdown Page
 
 # Hello, world!
 
-This is a test of markdown with [sipy](https://github.com/half-cambodian-hacker-man/sipy).
+This is a test of markdown with [sipy](https://github.com/videogame-hacker/sipy).
 ```
 
 And simply run:

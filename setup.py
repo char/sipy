@@ -6,12 +6,12 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="sipy",
     version="0.3.1",
-    author="half cambodian hacker man",
+    author="videogame hacker",
     author_email="half-kh-hacker@hackery.site",
     description="A lean static site generator in Python",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/half-cambodian-hacker-man/sipy",
+    url="https://github.com/videogame-hacker/sipy",
     packages=["sipy", "sipy.ext"],
     classifiers=[
         "Programming Language :: Python :: 3",
